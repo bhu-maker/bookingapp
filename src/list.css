@@ -1,0 +1,9 @@
+.formcontainer{
+    display:flex;
+    background-color:cadetblue;
+    width :25%;
+    border-radius: 5px;
+    height:300px;
+    justify-content : center;
+}
+
