@@ -24,6 +24,7 @@ const Home = () => {
   ]);
 
   const [opendate, setOpendate] = useState(false);
+  const [openoptions,setopenoptions] = useState(false);
 
   const navigate = useNavigate()
   const [options, setOptions] = useState({
@@ -60,10 +61,11 @@ const Home = () => {
             placeholder="what's your destination?"
             value={inptext}
             onChange={(e) => {
-              setInpText(e.target.value);
-            }}
+              setInpText(e.target.value);}}
+            onClick={() =>{ setOpendate(!opendate)}}
+            
           />
-          <ul className="searchlist">
+         {opendate && <ul className="searchlist">
             {users
               .filter((item) =>
                 item.firstname.toLowerCase().includes(inptext.toLowerCase())
@@ -72,26 +74,30 @@ const Home = () => {
                 <li key={val.userid} style={{listStyleType:"none"}}> {val.firstname}</li>
               ))}
           </ul>
+}
         </div>
         <div className="searchitem">
-          <span
-            onClick={() => setOpendate(!opendate)}
+            <span onClick={() => setOpendate(!opendate)}>check in date to checkout date </span>
+            {opendate &&  <div><span
+            
             className="calendar"
           >{`${format(date[0].startDate, "MM/dd/yyy")} to ${format(
             date[0].endDate,
             "MM/dd/yyyy"
           )}`}</span>
-          {opendate && (
+         
             <DateRange
               editableDateInputs={true}
               onChange={(item) => setdate([item.selection])}
               moveRangeOnFirstSelection={false}
               ranges={date}
             />
-          )}
+            </div>
+          }
         </div>
         <div className="searchitem">
-          <div className="options">
+            <span onClick={() => setopenoptions(!openoptions)}>1 room . 2 adults . 0 children</span> 
+         {openoptions &&  <div className="options">
             <div className="optionsitem">
               <span className="optionstext">adult</span>
               <div className="optioncounter">
@@ -162,6 +168,7 @@ const Home = () => {
               </div>
             </div>
           </div>
+}
         </div>
         <div className="searchitem">
           <div className="searchbtn">

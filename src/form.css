@@ -1,0 +1,30 @@
+.pageselectheader{
+    display: flex;
+}
+.pageselectbutton{
+    display: flex;
+}
+.pageselectexamples{
+    display: flex;
+}
+
+.pageselectpriceoption{
+    display: flex;
+}
+
+.pageselectquantityheader{
+    display: flex;
+}
+.pageselectexamples{
+    display: flex;
+    flex-direction: column;
+}
+.pageselectpriceoptiondollar{
+    display: flex;
+    flex-direction: column;
+}
+
+.pageselectpriceoptionETA{
+    display: flex;
+    flex-direction: column;
+}
