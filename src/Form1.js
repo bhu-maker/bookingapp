@@ -10,14 +10,33 @@ export const Form1 = () => {
         mquantity : 0,
         lquantity : 0,
         xlquantity : 0,
-        response : ""
+        response : 0,
+        // optimization : 0,
+        section508 :[],
+        layout :[],
+        compatibitity : [],
+        interactivity : [],
+        jsfunctionality : [],
+        css_jsoptions : []
     })
  
+    const handleoptimization = (e) => {
+      const fieldname = e.target.name
+      // [...old] to create a new array out of the previous values. Protects against mutation
+      const options = [...qty[fieldname]] // Access object as an array for computed property name
+    
+      if (e.target.checked) {
+        options.push(e.target.value)
+      } else {
+        let index = options.indexOf(e.target.value)
+        options.splice(index, 1)
+      } 
+      // use same computed property name as above
+      setQty({ ...qty, [fieldname]: options})
+    }
+  
 
- const [sectionoptimization,setSectionOptimization] = useState({
-    select : false,
-    percentage : 0
- })
+ 
 
  const [openXS,setOpenXS] = useState(false)
  const [openS,setOpenS] = useState(false)
@@ -43,6 +62,8 @@ export const Form1 = () => {
  var seta = qty.squantity * 2
  var meta = qty.mquantity * 3
  var leta = qty.lquantity * 3
+
+
  var optiontotal  = Math.ceil((total*Number(qty.response))/100)
 console.log(total,Number(qty.response),optiontotal)
 
@@ -71,8 +92,33 @@ const handleoptions = (name, operation) => {
   };
   console.log("response",qty.response)
   
-  
+  const close=(val)=>{
+    console.log(val)
+    val===0 ?setOpenXS(false) :setOpenXS(true)
+  }
+  //  const handleoptimization=(e)=>{
+  //   const {name,value,checked} = e.target
+  //   console.log("%",name)
+  //   if (checked){
+  //     console.log("optimize",e,value,checked,name)
+  //     setQty((prev) => {
+  //       return {
+  //         ...prev,
+  //         [name]: value,
+  //       };
+  //     });
+  //   }
+  //     else { setQty((prev) => {
+  //       return {
+  //         ...prev,
+  //         [name]: 0,
+  //       };
+  //     });
+  //     }
+  // }
 
+
+  console.log("final",qty)
   return (
     <>
 
@@ -102,7 +148,7 @@ const handleoptions = (name, operation) => {
           <div className='pageselectquantityheader'>
             <span>Quantity</span>
             <button className='pageselectquantitybtn' onClick={() => {
-                    handleoptions("xsquantity", "d") ;
+                    handleoptions("xsquantity", "d") ; close(qty.xsquantity) ;
                   }}
                   disabled={qty.xsquantity <= 0 ? true : false}>-</button>
              <span className='pageselectquantitytext'>{qty.xsquantity}</span>
@@ -242,7 +288,7 @@ const handleoptions = (name, operation) => {
       </div>
     </div>
    </div>
-   </div>
+ 
 
    <div className="optimizationheader">
          <h2>Optimization and Accessbility</h2>
@@ -250,10 +296,10 @@ const handleoptions = (name, operation) => {
             <span>We create clean and optimized code that meets the rigorous W3C standards. For its full compliance with the accessibility requirements, select this option:</span>
         </div>
         <div className="optimizationsection">
-           <span> Section 508 / WCAG-----------------<input type="checkbox" name="+15%" value="section15%" 
-           />15%</span>
+           <span> Section 508 / WCAG-----------------<input type="checkbox" name="section508" value="15" onChange={handleoptimization} />15%</span>
             </div>
         </div>
+        
 
 <div className='responsivenessheader'>
 <h3>Responsiveness</h3>
@@ -271,12 +317,108 @@ const handleoptions = (name, operation) => {
   </div>
 </div>
 
+<div className="layoutheader">
+  <h3>Layout and Look</h3>
+  <div className='layoutsection'>
+    <span>Retina------------------------<input type="checkbox" name="layout" />included</span>
+    <span>Fonts ------------------------<select name="font">
+    <option value="google fonts">Volvo</option>
+  <option value="@font face">Saab</option>
+  <option value="typekit">Mercedes</option>
+  <option value="fonts.com">Audi</option>
+</select>
+    </span>
+  </div>
+</div>
+
+<div className="compactibilityheader">
+  <h6>Compatible with all modern browsers and devices.</h6>
+  <div className='compactibility section'>
+    <span>Compatible with and tested in/on Google Chrome, Mozilla Firefox, Safari 14+, Opera, Edge, IOS 14+ (IPhone, IPad), Android 9+<input type="checkbox" name="compactibility" />included</span>
+    <span>Another/older browser------------------------<input type="checkbox" name="compactibility" value="10" />included</span>
+  </div>
+</div>
+
+<div className="Interactivityoptionheader">
+  <h6>JS/CSS interactivity options</h6>
+  <div className='Interactivityoptionsection'>
+    <span>Standard interactivity pack<input type="checkbox" name="interactivity" />included</span>
+    <span>See what's included</span>
+  </div>
+</div>
+
+<div className="AdvancedJSfunctionalityheader">
+  <h6>Note: our JS development rates are $35-$45 per hour. We will provide the final price upon a thorough analysis of your designs and requirements.</h6>
+  <div className='Interactivityoptionsection'>
+    <span>Angular--------------------------<input type="checkbox" name="AdvancedJS" />included</span>
+    <span>D3--------------------------<input type="checkbox" name="AdvancedJS" />~$45/hr</span>
+    <span>jQuery--------------------------<input type="checkbox" name="AdvancedJS" />~$45/hr</span>
+    <span>Native JS--------------------------<input type="checkbox" name="AdvancedJS" />~$45/hr</span>
+    <span>jQuery UI--------------------------<input type="checkbox" name="AdvancedJS" />~$45/hr</span>
+  </div>
+  <h5>If you need anything beyond this list, let us know in the Project brief below</h5>
+</div>
+
+<div className="AdditionalCSS/JSOptions">
+  <h6>Note: our JS development rates are $35-$45 per hour. We will provide the final price upon a thorough analysis of your designs and requirements.</h6>
+  <div className='Interactivityoptionsection'>
+    <span>Advanced CSS3 Animation--------------------------<input type="checkbox" name="AdditionalCSS_JS" />included</span>
+    <span>Advanced Parallax--------------------------<input type="checkbox" name="AdditionalCSS_JS" />~$45/hr</span>
+    <span>Google Maps--------------------------<input type="checkbox" name="AdditionalCSS_JS" />~$45/hr</span>
+  </div>
+</div>
+
+<div>
+<h5>If you need anything beyond this list, let us know in the Project brief below</h5>
+  
+</div>
+
+<div className='projectheader'>
+  <h3>Project brief</h3>
+  <div className='projectsection'>
+    <input type="textarea"/>
+  </div>
+</div>
+<div class="form-box form-box-flex">
+
+<div class="form-box-half">
+                    <h3>Attachments</h3>
+                    <div class="drop-area attachment-holder">
+                      <span class="text-holder">Drop files here, or <input class="input-attachment" name="attach-file" type="file" data-jcf='{"buttonText": "browse/insert a link", "placeholderText": "Custom placeholder"}' multiple/>,<br/>
+                        or share from <a href="#" class="dropbox-link">Dropbox</a></span>
+                      <ul class="attach-list"></ul>
+                      <input type="hidden" name="order[attachment]" class="input-attachment-data"/>
+                    </div>
+                  </div>
+
+                  <div class="form-box-half">
+                                                                                  <h3>Contact details</h3>
+                    <div class="form-row">
+                      <div class="form-col">
+                                                <input type="text" id="order_user_name" name="order[user][name]" placeholder="Name" />
+                      </div>
+                    </div>
+                    <div class="form-row" data-validate-row>
+                      <div class="form-col">
+                                                <input type="text" id="order_user_phone" name="order[user][phone]" maxlength="20" data-require="phone" placeholder="Phone *" />
+                        <span class="error-text">Please enter your phone number</span>
+                      </div>
+                    </div>
+                    <div class="form-row" data-validate-row>
+                      <div class="form-col">
+                                                <input type="text" id="order_user_email" name="order[user][email]" required="required" data-require="email" placeholder="Email *" />
+                        <span class="error-text">Please specify a valid email address</span>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+
    
     <div className='summaryheader'>
       <h3>SUMMARY</h3>
      {openXS &&  <div className='summarycontent'>
       <button className='summarycontentbtn' onClick={() => {
-                    handleoptions("xsquantity", "d");
+                    handleoptions("xsquantity", "d");close(qty.xsquantity)
                   }}
                   disabled={qty.xsquantity <= 0 ? true : false}>-</button>
              <button className='summarycontentbtn' onClick={() => {
@@ -330,11 +472,14 @@ const handleoptions = (name, operation) => {
 }
 
 <div className='summarycontent'>
-      {response1 && <span> {`I have one resolution ----------+${qty.response}%`}</span>}
-      {response2 &&  <span> {`I have 2 resolutions (e.g. Tablet & Mobile) ----------+${qty.response}%`}</span>}
-      {response3 &&  <span> {`I have a design for 3 resolutions and more ----------+${qty.response}%`}</span>}
+      {response1 && opentotal && <span> {`I have one resolution ----------+${qty.response}%`}</span>}
+      {response2 && opentotal &&  <span> {`I have 2 resolutions (e.g. Tablet & Mobile) ----------+${qty.response}%`}</span>}
+      {response3 && opentotal &&  <span> {`I have a design for 3 resolutions and more ----------+${qty.response}%`}</span>}
       </div>
- {openoptiontotal &&    <div className='summarycontent'>
+      <div>
+      <span>{qty.optimization} </span>
+              </div>
+ {openoptiontotal &&  opentotal &&  <div className='summarycontent'>
         {`Options Total ----------$${optiontotal}`}
       </div>}
       <hr />
@@ -351,7 +496,7 @@ const handleoptions = (name, operation) => {
 
    
     </div>
-    
+    </div>
 
     </>
   )

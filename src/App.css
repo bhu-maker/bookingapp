@@ -8,6 +8,9 @@
     border-radius: 5px;;
 
 }
+.layoutheader{
+    display: flex;
+}
 
 /* .searchitem{
     display: flex;
